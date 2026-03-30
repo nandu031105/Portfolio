@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nandini Kudupudi — Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet"/>
+  <style>
+    /* ── RESET & ROOT ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 62.5%; scroll-behavior: smooth; overflow-x: hidden; }
+    body { background: #0f0a0a; color: #fff; font-family: 'Poppins', sans-serif; font-size: 1.6rem; overflow-x: hidden; }
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-thumb { background: #ff00ee; border-radius: 4px; }
+
+    /* ── VARIABLES ── */
+    :root {
+      --pink: #ff00ee;
+      --bg:   #0f0a0a;
+      --card: rgba(255,255,255,0.05);
+      --border: rgba(255,255,255,0.1);
+      --muted: rgba(255,255,255,0.5);
+      --gold: #F5C842;
+    }
+
+    /* ── GLOW ORBS ── */
+    .orb { position: fixed; border-radius: 50%; filter: blur(90px); pointer-events: none; z-index: 0; }
+    .orb-1 { width: 50rem; height: 50rem; top: -15rem; right: -10rem; background: rgba(255,0,238,0.1); }
+    .orb-2 { width: 35rem; height: 35rem; bottom: -10rem; left: -8rem;  background: rgba(255,0,238,0.07); }
+
+    /* ── NAV ── */
+    .header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      padding: 2rem 9%;
+      display: flex; justify-content: space-between; align-items: center;
+      transition: background 0.4s, border-bottom 0.4s;
+    }
+    .header.sticky {
+      background: rgba(15,10,10,0.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+    .logo { font-size: 2.6rem; font-weight: 700; text-decoration: none; color: #fff; }
+    .logo span { color: var(--pink); }
+    #menu { font-size: 2.8rem; color: #fff; display: none; cursor: pointer; }
+    .navbar { display: flex; gap: 0.5rem; }
+    .navbar a {
+      font-size: 1.4rem; font-weight: 500; text-decoration: none;
+      color: var(--muted); padding: 0.6rem 1.4rem; border-radius: 0.4rem;
+      transition: color 0.25s, background 0.25s;
+      animation: topSlide 0.8s both;
+      animation-delay: calc(0.15s * var(--vlr));
+    }
+    .navbar a:hover, .navbar a.active { color: var(--pink); background: rgba(255,0,238,0.07); }
+
+    @keyframes topSlide { from{opacity:0;transform:translateY(-20px);} to{opacity:1;transform:translateY(0);} }
+    @keyframes fadeUp   { from{opacity:0;transform:translateY(24px);}  to{opacity:1;transform:translateY(0);}  }
+    @keyframes fadeLeft { from{opacity:0;transform:translateX(-24px);} to{opacity:1;transform:translateX(0);}  }
+    @keyframes scaleIn  { from{opacity:0;transform:scale(0.8);}        to{opacity:1;transform:scale(1);}       }
+
+    /* ── SECTIONS ── */
+    section { position: relative; z-index: 1; padding: 10rem 9% 6rem; min-height: 100vh; }
+
+    .sec-title {
+      font-size: 5rem; font-weight: 700; text-align: center;
+      margin-bottom: 5rem;
+      opacity: 0; transform: translateY(-20px);
+      transition: opacity 0.6s, transform 0.6s;
+    }
+    section.in-view .sec-title { opacity: 1; transform: translateY(0); }
+    .sec-title span { color: var(--pink); }
+
+    /* ═══════════ HOME ═══════════ */
+    #home {
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 4rem; padding-top: 12rem;
+    }
+    .home-text { max-width: 65rem; }
+
+    .avail-pill {
+      display: inline-flex; align-items: center; gap: 0.8rem;
+      background: rgba(255,0,238,0.08); border: 1px solid rgba(255,0,238,0.2);
+      border-radius: 10rem; padding: 0.6rem 1.6rem;
+      font-size: 1.2rem; color: var(--pink); letter-spacing: 0.1em; text-transform: uppercase;
+      margin-bottom: 2rem;
+      animation: fadeUp 0.6s 0.2s both;
+    }
+    .avail-dot { width: 0.7rem; height: 0.7rem; border-radius: 50%; background: var(--pink); animation: blink 1.8s infinite; }
+    @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+
+    .home-name {
+      font-style:oblique;
+      font-size: clamp(4rem, 7vw, 7rem); font-weight: 700; line-height: 1.05;
+      animation: fadeUp 0.6s 0.4s both;
+    }
+    .home-role-wrap {
+      position: relative; width: 33rem; margin: 1.5rem 0;
+      animation: fadeUp 0.6s 0.6s both;
+    }
+    .home-role {
+      font-size: 3rem; font-weight: 700;
+      color: transparent;
+      -webkit-text-stroke: 0.7px var(--pink);
+      background: linear-gradient(var(--pink), var(--pink)) no-repeat;
+      -webkit-background-clip: text;
+      background-clip: text;
+      background-position: -33rem 0;
+      animation: textFill 6s linear 1.5s infinite;
+    }
+    @keyframes textFill { 0%,10%,100%{background-position:-33rem 0;} 65%,85%{background-position:0 0;} }
+    .home-role-wrap::before {
+      content: ''; position: absolute; left: 0; top: 0; height: 100%; width: 0;
+      border-right: 2px solid var(--pink);
+      animation: cursorAnim 6s linear 1.5s infinite;
+    }
+    @keyframes cursorAnim { 0%,10%,100%{width:0;} 65%,78%,85%{opacity:1;width:100%;} 75%,81%{opacity:0;} }
+
+    .home-desc {
+      font-size: 1.4rem; line-height: 1.9; color: var(--muted); max-width: 50rem;
+      margin: 1.5rem 0 2.5rem;
+      animation: fadeUp 0.6s 0.8s both;
+    }
+    .home-btns {
+      display: flex; gap: 1.4rem; flex-wrap: wrap;
+      animation: fadeUp 0.6s 1s both;
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-family: 'Poppins', sans-serif; font-size: 1.5rem; font-weight: 500;
+      padding: 1rem 2.4rem; border-radius: 0.8rem;
+      cursor: pointer; text-decoration: none; transition: all 0.3s;
+      position: relative; overflow: hidden;
+    }
+    .btn::before {
+      content: ''; position: absolute; left: 0; top: -100%;
+      height: 300%; width: 100%;
+      background: linear-gradient(#0f0a0a, var(--pink), #0f0a0a, var(--pink));
+      z-index: -1; transition: top 0.5s;
+    }
+    .btn:hover::before { top: 0; }
+    .btn-fill { background: rgba(255,255,255,0.1); border: 2px solid rgba(255,255,255,0.3); color: #fff; }
+    .btn-fill:hover { border-color: var(--pink); }
+
+    .home-socials { display: flex; gap: 1rem; margin-top: 2.5rem; animation: fadeUp 0.6s 1.2s both; }
+    .home-socials a {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 4.4rem; height: 4.4rem; border-radius: 50%;
+      background: rgba(255,255,255,0.08); border: 2px solid rgba(255,255,255,0.2);
+      color: #fff; font-size: 2rem; text-decoration: none;
+      transition: all 0.3s; position: relative; overflow: hidden;
+    }
+    .home-socials a::after {
+      content: ''; position: absolute; left: 0; top: -100%;
+      height: 300%; width: 100%;
+      background: linear-gradient(#0f0a0a, var(--pink), #0f0a0a, var(--pink));
+      z-index: -1; transition: top 0.5s;
+    }
+    .home-socials a:hover::after { top: 0; }
+    .home-socials a:hover { border-color: var(--pink); }
+
+    .home-photo { flex-shrink: 0; animation: scaleIn 0.8s 1s both; }
+    .home-photo img {
+      width: 30vw; max-width: 34rem;
+      border-radius: 50%; border: 2px solid rgba(255,255,255,0.2);
+      filter: drop-shadow(0 0 6rem var(--pink));
+    }
+
+    /* ═══════════ ABOUT ═══════════ */
+    #about {
+      display: flex; justify-content: center; align-items: center;
+      flex-direction: column; gap: 3rem;
+    }
+    .about-img {
+      width: 20rem; height: 20rem; border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.2);
+      filter: drop-shadow(0 0 6rem var(--pink));
+      opacity: 0; transform: scale(0.8);
+      transition: opacity 0.6s 0.2s, transform 0.6s 0.2s;
+    }
+    section.in-view .about-img { opacity: 1; transform: scale(1); }
+    .about-text { text-align: center; max-width: 70rem; }
+    .about-text h3 {
+      font-size: 2.6rem; font-weight: 700; color: transparent;
+      -webkit-text-stroke: 0.7px var(--pink);
+      margin-bottom: 2rem;
+      opacity: 0; transform: translateX(-20px);
+      transition: opacity 0.6s 0.3s, transform 0.6s 0.3s;
+    }
+    section.in-view .about-text h3 { opacity: 1; transform: translateX(0); }
+    .about-text p {
+      font-size: 1.5rem; line-height: 2; color: var(--muted);
+      opacity: 0; transform: translateX(20px);
+      transition: opacity 0.6s 0.4s, transform 0.6s 0.4s;
+    }
+    section.in-view .about-text p { opacity: 1; transform: translateX(0); }
+    .about-stats {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem;
+      width: 100%; max-width: 70rem; margin-top: 1rem;
+    }
+    .stat-box {
+      background: var(--card); border: 1px solid var(--border); border-radius: 1.2rem;
+      padding: 2rem; text-align: center;
+      opacity: 0; transform: translateY(16px);
+      transition: opacity 0.5s, transform 0.5s, border-color 0.3s;
+    }
+    section.in-view .stat-box:nth-child(1){opacity:1;transform:translateY(0);transition-delay:0.3s;}
+    section.in-view .stat-box:nth-child(2){opacity:1;transform:translateY(0);transition-delay:0.4s;}
+    section.in-view .stat-box:nth-child(3){opacity:1;transform:translateY(0);transition-delay:0.5s;}
+    section.in-view .stat-box:nth-child(4){opacity:1;transform:translateY(0);transition-delay:0.6s;}
+    .stat-box:hover { border-color: rgba(255,0,238,0.4); }
+    .stat-num { font-family: 'race';font-size: 3rem;   font-weight: 700; color: var(--pink); }
+    .stat-label { font-size: 1.2rem; color: var(--muted); margin-top: 0.4rem; }
+
+    /* ═══════════ EDUCATION ═══════════ */
+    #education { display: flex; flex-direction: column; }
+    .edu-timeline { max-width: 75rem; margin: 0 auto; width: 100%; position: relative; }
+    .edu-timeline::before {
+      content: ''; position: absolute; left: 2.4rem; top: 0; bottom: 0;
+      width: 2px; background: linear-gradient(to bottom, var(--pink), transparent);
+    }
+    .edu-item {
+      display: flex; gap: 3rem; margin-bottom: 4rem;
+      opacity: 0; transform: translateX(-20px);
+      transition: opacity 0.6s, transform 0.6s;
+    }
+    section.in-view .edu-item:nth-child(1){opacity:1;transform:translateX(0);transition-delay:0.2s;}
+    section.in-view .edu-item:nth-child(2){opacity:1;transform:translateX(0);transition-delay:0.4s;}
+    section.in-view .edu-item:nth-child(3){opacity:1;transform:translateX(0);transition-delay:0.6s;}
+    .edu-dot {
+      flex-shrink: 0; width: 4.8rem; height: 4.8rem; border-radius: 50%;
+      background: #0f0a0a; border: 2px solid var(--pink);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--pink); font-size: 2rem; z-index: 1;
+    }
+    .edu-card {
+      flex: 1; background: var(--card); border: 1px solid var(--border);
+      border-radius: 1.4rem; padding: 2.5rem 3rem;
+      transition: border-color 0.3s;
+    }
+    .edu-card:hover { border-color: rgba(255,0,238,0.35); }
+    .edu-year { font-size: 1.2rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--pink); margin-bottom: 0.8rem; }
+    .edu-degree { font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .edu-school { font-size: 1.4rem; color: var(--muted); }
+    .edu-grade {
+      display: inline-block; margin-top: 1rem;
+      font-size: 1.2rem; background: rgba(255,0,238,0.1);
+      color: var(--pink); border: 1px solid rgba(255,0,238,0.25);
+      border-radius: 0.4rem; padding: 0.3rem 1rem;
+    }
+
+    /* ═══════════ PROJECTS ═══════════ */
+    #projects { display: flex; flex-direction: column; }
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(34rem, 1fr)); gap: 3rem; }
+
+    /* flip card */
+    .project-wrap {
+      height: 40rem; perspective: 1000px;
+      opacity: 0; transform: translateY(24px);
+      transition: opacity 0.6s, transform 0.6s;
+    }
+    section.in-view .project-wrap:nth-child(1){opacity:1;transform:translateY(0);transition-delay:0.15s;}
+    section.in-view .project-wrap:nth-child(2){opacity:1;transform:translateY(0);transition-delay:0.3s;}
+    .project-inner {
+      position: relative; width: 100%; height: 100%;
+      transform-style: preserve-3d;
+      transition: transform 0.7s cubic-bezier(0.4,0.2,0.2,1);
+    }
+    .project-wrap:hover .project-inner { transform: rotateY(180deg); }
+    .card-front, .card-back {
+      position: absolute; inset: 0; border-radius: 1.8rem;
+      backface-visibility: hidden; padding: 3rem;
+      display: flex; flex-direction: column;
+    }
+    .card-front {
+      background: var(--card); border: 1px solid var(--border);
+    }
+    .card-front::after {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--pink), #ff6ef7);
+      border-radius: 1.8rem 1.8rem 0 0;
+    }
+    .card-back {
+      background: linear-gradient(135deg, #1a0522, #0a0212);
+      border: 1px solid rgba(255,0,238,0.25);
+      transform: rotateY(180deg);
+      justify-content: space-between;
+    }
+    .proj-num { font-size: 1rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.8rem; }
+    .proj-icon {
+      width: 5.5rem; height: 5.5rem; border-radius: 1.2rem;
+      background: rgba(255,0,238,0.1); border: 1px solid rgba(255,0,238,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.6rem; color: var(--pink); margin-bottom: 1.8rem;
+    }
+    .proj-name { font-size: 2.4rem; font-weight: 700; margin-bottom: 0.8rem; }
+    .proj-short { font-size: 1.4rem; color: var(--muted); line-height: 1.7; flex: 1; }
+    .proj-tags { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-top: 1.8rem; }
+    .tag {
+      font-size: 1.1rem; letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 0.4rem 1rem; border-radius: 0.4rem;
+      background: rgba(255,0,238,0.1); border: 1px solid rgba(255,0,238,0.2); color: var(--pink);
+    }
+    .flip-hint { font-size: 1.2rem; color: var(--muted); margin-top: 1.6rem; display: flex; align-items: center; gap: 0.5rem; }
+    .flip-hint i { animation: spin 2s ease-in-out infinite; display: inline-block; }
+    @keyframes spin { 0%,100%{transform:rotate(0);} 50%{transform:rotate(20deg);} }
+
+    .back-label { font-size: 1rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--pink); margin-bottom: 1.2rem; }
+    .back-title { font-size: 2.2rem; font-weight: 700; margin-bottom: 1.4rem; }
+    .back-desc { font-size: 1.4rem; line-height: 1.85; color: rgba(255,255,255,0.6); flex: 1; }
+    .back-actions { display: flex; gap: 1.2rem; margin-top: 2rem; }
+    .proj-link {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      font-size: 1.3rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em;
+      text-decoration: none; padding: 0.9rem 1.8rem; border-radius: 0.7rem; transition: all 0.25s;
+    }
+    .proj-link.primary { background: var(--pink); color: #0f0a0a; }
+    .proj-link.primary:hover { background: #ff6ef7; transform: translateY(-2px); }
+
+    /* ═══════════ SKILLS ═══════════ */
+    
+/* ═══════════ SKILLS / WEAPONS ═══════════ */
+#skills {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5rem;
+}
+
+/* ── Ransom-note title ── */
+.weapons-title {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 1rem;
+  opacity: 0;
+  transform: translateY(-16px);
+  transition: opacity 0.6s 0.1s, transform 0.6s 0.1s;
+}
+section.in-view .weapons-title { opacity: 1; transform: translateY(0); }
+
+.wt-my {
+  font-size: 5.5rem;
+  font-weight: 900;
+  font-style: italic;
+  color: #4a9eff;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  font-family: 'Georgia', serif;
+}
+
+.wt-skills {
+  display: inline-flex;
+  gap: 0.2rem;
+  align-items: flex-end;
+}
+
+/* each letter gets a random cut-out look */
+.wt-skills span {
+  display: inline-block;
+  font-size: 5.5rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  line-height: 1;
+  padding: 0.1rem 0.5rem;
+  border: 2px solid currentColor;
+  border-radius: 0.3rem;
+  animation: letterWobble 3s ease-in-out infinite;
+}
+.wt-skills span:nth-child(1){ color:#4a9eff;  transform:rotate(-4deg);  animation-delay:0s;    font-family:'Georgia',serif; font-size:6rem; }
+.wt-skills span:nth-child(2){ color:#fff;     transform:rotate(2deg);   animation-delay:0.2s;  font-family:'Courier New',monospace; font-size:4.8rem; }
+.wt-skills span:nth-child(3){ color:#4a9eff;  transform:rotate(-2deg);  animation-delay:0.4s;  font-family:'Arial Black',sans-serif; font-size:5.8rem; text-transform:uppercase; }
+.wt-skills span:nth-child(4){ color:#fff;     transform:rotate(3deg);   animation-delay:0.1s;  font-family:'Times New Roman',serif; font-size:5rem; text-transform:lowercase; }
+.wt-skills span:nth-child(5){ color:#4a9eff;  transform:rotate(-3deg);  animation-delay:0.5s;  font-family:'Courier New',monospace; font-size:4.6rem; text-transform:lowercase; }
+.wt-skills span:nth-child(6){ color:#fff;     transform:rotate(4deg);   animation-delay:0.3s;  font-family:'Georgia',serif; font-size:6rem; text-transform:uppercase; }
+.wt-skills span:nth-child(7){ color:#4a9eff;  transform:rotate(-1deg);  animation-delay:0.6s;  font-family:'Arial',sans-serif; font-size:4.8rem; text-transform:lowercase; }
+
+@keyframes letterWobble {
+  0%,100% { transform: rotate(var(--r, 0deg)) translateY(0); }
+  50%      { transform: rotate(var(--r, 0deg)) translateY(-4px); }
+}
+
+/* ── Group ── */
+.weapons-group {
+  width: 100%;
+  max-width: 100rem;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s, transform 0.6s;
+}
+section.in-view .weapons-group:nth-child(2){ opacity:1; transform:translateY(0); transition-delay:0.2s; }
+section.in-view .weapons-group:nth-child(3){ opacity:1; transform:translateY(0); transition-delay:0.35s; }
+section.in-view .weapons-group:nth-child(4){ opacity:1; transform:translateY(0); transition-delay:0.5s; }
+
+.weapons-group-label {
+  font-size: 1.1rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+/* ── Row of weapon cards ── */
+.weapons-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+/* ── Individual card ── */
+.weapon-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+  cursor: default;
+  transition: transform 0.25s ease;
+}
+.weapon-card:hover { transform: translateY(-6px) scale(1.06); }
+
+/* tech icon box — rounded square like app icons */
+.weapon-icon-box {
+  width: 9rem;
+  height: 9rem;
+  border-radius: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+  transition: box-shadow 0.25s, border-color 0.25s;
+}
+.weapon-icon-box svg {
+  width: 5.4rem;
+  height: 5.4rem;
+}
+.weapon-card:hover .weapon-icon-box {
+  box-shadow: 0 12px 36px rgba(255,0,238,0.25);
+  border-color: rgba(255,0,238,0.3);
+}
+
+/* soft skill icon */
+.weapon-soft-icon {
+  width: 9rem;
+  height: 9rem;
+  border-radius: 2rem;
+  background: rgba(255,0,238,0.08);
+  border: 1px solid rgba(255,0,238,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3.8rem;
+  color: var(--pink);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  transition: box-shadow 0.25s, background 0.25s;
+}
+.weapon-soft:hover .weapon-soft-icon {
+  background: rgba(255,0,238,0.14);
+  box-shadow: 0 12px 36px rgba(255,0,238,0.25);
+}
+
+.weapon-name {
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: rgba(255,255,255,0.8);
+  text-align: center;
+  letter-spacing: 0.03em;
+}
+
+
+  
+
+    /* ═══════════ CERTIFICATES — POLAROID PINBOARD ═══════════ */
+  
+#certificates { display: flex; flex-direction: column; min-height: auto; padding-bottom: 6rem; }
+
+.cert-board {
+  position: relative;
+  width: 100%;
+  padding: 6rem 4rem 4rem;
+  background-image:
+    linear-gradient(rgba(255,0,238,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,0,238,0.04) 1px, transparent 1px);
+  background-size: 3.5rem 3.5rem;
+  border: 1px solid var(--border);
+  border-radius: 2rem;
+}
+
+.cert-board::before {
+  content: ''; position: absolute; inset: 0; border-radius: 2rem;
+  background: radial-gradient(ellipse at 50% 50%, rgba(255,0,238,0.05) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.cert-string {
+  position: absolute; top: 4.5rem; left: 6%; right: 6%; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,0,238,0.25) 20%, rgba(255,0,238,0.25) 80%, transparent);
+  pointer-events: none;
+}
+
+.cert-cards-row {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 5rem;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── POLAROID CARD ── */
+.cert-polaroid {
+  position: relative;
+  background: #111;                /* dark card */
+  padding: 1.2rem 1.2rem 5rem;
+  width: 26rem;
+  box-shadow: 0 10px 32px rgba(0,0,0,0.8), 0 3px 10px rgba(0,0,0,0.5);
+  opacity: 0;
+  transition: box-shadow 0.35s, opacity 0.7s, transform 0.7s;
+}
+
+.cert-polaroid.tilt-left  { transform: rotate(-5deg) translateY(6px); }
+.cert-polaroid.tilt-none  { transform: rotate(0deg)  translateY(0px); }
+.cert-polaroid.tilt-right { transform: rotate(5deg)  translateY(-6px); }
+
+section.in-view .cert-polaroid.tilt-left  { opacity:1; transform: rotate(-5deg) translateY(6px);  transition-delay:0.2s; }
+section.in-view .cert-polaroid.tilt-none  { opacity:1; transform: rotate(0deg)  translateY(0px);  transition-delay:0.35s; }
+section.in-view .cert-polaroid.tilt-right { opacity:1; transform: rotate(5deg)  translateY(-6px); transition-delay:0.5s; }
+
+.cert-polaroid.tilt-left:hover  { box-shadow: 0 24px 60px rgba(255,0,238,0.4), 0 8px 20px rgba(0,0,0,0.6); transform: rotate(-5deg) translateY(-10px) scale(1.04); }
+.cert-polaroid.tilt-none:hover  { box-shadow: 0 24px 60px rgba(255,0,238,0.4), 0 8px 20px rgba(0,0,0,0.6); transform: rotate(0deg)  translateY(-12px) scale(1.04); }
+.cert-polaroid.tilt-right:hover { box-shadow: 0 24px 60px rgba(255,0,238,0.4), 0 8px 20px rgba(0,0,0,0.6); transform: rotate(5deg)  translateY(-14px) scale(1.04); }
+
+/* ── PIN ── */
+.cert-pin {
+  position: absolute; top: -1.4rem; left: 50%; transform: translateX(-50%);
+  width: 1.8rem; height: 1.8rem; border-radius: 50%;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.7), inset 0 -2px 4px rgba(0,0,0,0.3);
+  z-index: 5;
+}
+
+/* ── CERTIFICATE IMAGE ── */
+.cert-img {
+  width: 100%;
+  height: 17rem;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+  border-radius: 0.3rem;
+}
+
+/* ── RIBBON ── */
+.cert-ribbon {
+  position: absolute; top: 1.2rem; right: -0.5rem;
+  font-size: 0.9rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 0.3rem 1.1rem;
+  box-shadow: 2px 2px 6px rgba(0,0,0,0.6);
+  z-index: 3;
+}
+.cert-ribbon::after {
+  content: ''; position: absolute; right: 0; bottom: -0.5rem;
+  border-left: 0.35rem solid transparent;
+  border-right: 0.35rem solid #555;
+  border-top: 0.5rem solid #555;
+}
+
+/* ── CAPTION ── */
+.cert-caption {
+  font-family: 'Caveat', cursive;
+  font-size: 1.8rem; font-weight: 700;
+  color: #ccc;                      /* light text on dark card */
+  text-align: center; line-height: 1.4;
+  margin-top: 0.8rem; padding: 0 0.5rem;
+}
+
+/* ── WATERMARK ── */
+.board-watermark {
+  font-family: 'Caveat', cursive;
+  text-align: right; font-size: 1.6rem; font-weight: 600;
+  color: rgba(255,255,255,0.1); margin-top: 3rem;
+  position: relative; z-index: 1;
+}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px) {
+  .cert-cards-row { gap: 3rem; }
+  .cert-polaroid  { width: 22rem; }
+  .cert-img       { height: 14rem; }
+}
+@media(max-width:520px) {
+  .cert-polaroid { width: 20rem; padding: 1rem 1rem 4.5rem; }
+  .cert-img      { height: 13rem; }
+}
+    
+
+    
+
+
+
+/* ═══════════ CONTACT ═══════════ */
+#contact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* centered form container */
+.cf-box {
+  width: 100%;
+  max-width: 75rem;
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s 0.2s, transform 0.6s 0.2s;
+}
+section.in-view .cf-box {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* two-column row */
+.cf-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.6rem;
+  margin-bottom: 1.6rem;
+}
+
+/* all inputs + textarea */
+.cf-input {
+  width: 100%;
+  background: rgba(80, 0, 80, 0.18);
+  border: 1px solid rgba(255, 0, 238, 0.2);
+  border-radius: 0.8rem;
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.5rem;
+  padding: 1.4rem 1.8rem;
+  outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s, background 0.3s;
+}
+.cf-input::placeholder {
+  color: rgba(255, 255, 255, 0.35);
+}
+.cf-input:focus {
+  border-color: var(--pink);
+  background: rgba(255, 0, 238, 0.08);
+  box-shadow: 0 0 0 3px rgba(255, 0, 238, 0.15);
+}
+
+/* textarea */
+.cf-textarea {
+  display: block;
+  resize: none;
+  min-height: 18rem;
+  margin-bottom: 2.4rem;
+}
+
+/* button centered */
+.cf-btn-wrap {
+  display: flex;
+  justify-content: center;
+}
+
+.cf-send-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 0.8rem;
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 500;
+  padding: 1.1rem 3.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  transition: all 0.3s;
+  letter-spacing: 0.04em;
+}
+.cf-send-btn i { font-size: 1.8rem; }
+.cf-send-btn:hover {
+  background: var(--pink);
+  border-color: var(--pink);
+  color: #0f0a0a;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(255, 0, 238, 0.35);
+}
+
+/* success screen */
+.success-screen {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 4rem;
+  gap: 2rem;
+}
+.success-circle {
+  width: 9rem; height: 9rem;
+  border-radius: 50%;
+  background: rgba(255, 0, 238, 0.1);
+  border: 2px solid var(--pink);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 4rem; color: var(--pink);
+  animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+}
+@keyframes popIn {
+  from { transform: scale(0); }
+  to   { transform: scale(1); }
+}
+.success-screen h4 { font-size: 2.6rem; font-weight: 700; }
+.success-screen h4 span { color: var(--pink); }
+.success-screen p { font-size: 1.45rem; color: var(--muted); line-height: 1.8; }
+
+
+
+
+    /* ═══════════ RESPONSIVE ═══════════ */
+    @media(max-width:900px){
+      #home { flex-direction: column-reverse; text-align: center; }
+      .home-btns, .home-socials { justify-content: center; }
+      .home-photo img { width: 20rem; }
+      .home-role-wrap { margin: 1.5rem auto; }
+      .about-stats { grid-template-columns: 1fr 1fr; }
+      .contact-grid { grid-template-columns: 1fr; }
+    }
+    @media(max-width:768px){
+      #menu { display: block; }
+      .navbar { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: rgba(15,10,10,0.97); border-bottom: 1px solid var(--border); padding: 2rem 9%; }
+      .navbar.open { display: flex; }
+      .form-row { grid-template-columns: 1fr; }
+      section { padding: 10rem 5% 4rem; }
+      .cert-cards-row { gap: 6rem; }
+    }
+    @media(max-width:520px){
+      .about-stats { grid-template-columns: 1fr 1fr; }
+      .cert-polaroid { width: 22rem; }
+      .cert-face { min-height: 16rem; padding: 2rem 1.5rem; }
+    }
+    @media(max-width:400px){ html{font-size:55%;} }
+  </style>
+</head>
+<body>
+
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <!-- ── NAV ── -->
+  <header class="header" id="header">
+    <a href="#home" class="logo">Nanduuu<span>...</span></a>
+    <i class="bx bx-menu" id="menu"></i>
+    <nav class="navbar" id="navbar">
+      <a href="#home"         style="--vlr:1" class="active">Home</a>
+      <a href="#about"        style="--vlr:2">About</a>
+      <a href="#education"    style="--vlr:3">Education</a>
+      <a href="#projects"     style="--vlr:4">Projects</a>
+      <a href="#skills"       style="--vlr:5">Skills</a>
+      <a href="#certificates" style="--vlr:6">Certificates</a>
+      <a href="#contact"      style="--vlr:7">Contact</a>
+    </nav>
+  </header>
+
+  <!-- ── HOME ── -->
+  <section id="home">
+    <div class="home-text">
+      <div class="avail-pill"><span class="avail-dot"></span> Open to Opportunities</div>
+      <h1 class="home-name" style="font-family:'Verdana Bold';">I'm Nandini Kudupudi</h1>
+      <div class="home-role-wrap">
+        <h2 class="home-role">Aspiring Software Engineer</h2>
+      </div>
+      <p class="home-desc">Seeking an opportunity with a progressive organization where I can utilize my programming knowledge, enhance my skills, and grow as a software engineer.</p>
+      <div class="home-btns">
+        <a href="#contact" class="btn btn-fill">Hire Me</a>
+        <a href="resume.pdf" target="_blank" class="btn btn-fill">My Resume</a>
+      </div>
+      <div class="home-socials">
+        <a href="https://wa.me/9392552142" target="_blank"><i class='bx bxl-whatsapp'></i></a>
+        <a href="mailto:nandu031105@gmail.com" target="_blank"><i class='bx bxl-gmail'></i></a>
+        <a href="https://www.linkedin.com/in/nandini-devi-kudupudi-b21216350" target="_blank"><i class='bx bxl-linkedin'></i></a>
+      </div>
+    </div>
+    <div class="home-photo">
+      <img src="./nandu1.jpeg" alt="Nandini Kudupudi"/>
+    </div>
+  </section>
+
+  <!-- ── ABOUT ── -->
+  <section id="about">
+    <h2 class="sec-title">About <span>Me</span></h2>
+    <img src="./nandu2.jpeg" alt="Nandini" class="about-img"/>
+    <div class="about-text">
+      <h3>Aspiring Software Engineer</h3>
+      <p>I am an aspiring software engineer passionate about programming and problem solving. I have knowledge of C, Java, Python, HTML, CSS, and basic JavaScript. I enjoy building projects to improve my technical skills and gain practical experience. Currently pursuing B.Tech in CSE (AI &amp; DS) with a CGPA of 9.04.</p>
+    </div>
+    <div class="about-stats">
+      <div class="stat-box"><div class="stat-num">9.04</div><div class="stat-label">CGPA</div></div>
+      <div class="stat-box"><div class="stat-num">2</div><div class="stat-label">Live Projects</div></div>
+      <div class="stat-box"><div class="stat-num">3</div><div class="stat-label">Certificates</div></div>
+      <div class="stat-box"><div class="stat-num">5+</div><div class="stat-label">Tech Skills</div></div>
+    </div>
+  </section>
+
+  <!-- ── EDUCATION ── -->
+  <section id="education">
+    <h2 class="sec-title">My <span>Education</span></h2>
+    <div class="edu-timeline">
+      <div class="edu-item">
+        <div class="edu-dot"><i class='bx bxs-graduation'></i></div>
+        <div class="edu-card">
+          <div class="edu-year"><i class='bx bxs-calendar'></i> 2020 – 2021</div>
+          <div class="edu-degree">SSC (Class X)</div>
+          <div class="edu-school">Jawahar Navodaya Vidyalaya, Peddapuram, Andhra Pradesh</div>
+          <span class="edu-grade">88%</span>
+        </div>
+      </div>
+      <div class="edu-item">
+        <div class="edu-dot"><i class='bx bxs-book-open'></i></div>
+        <div class="edu-card">
+          <div class="edu-year"><i class='bx bxs-calendar'></i> 2021 – 2023</div>
+          <div class="edu-degree">Intermediate (Class XII)</div>
+          <div class="edu-school">Jawahar Navodaya Vidyalaya, Peddapuram, Andhra Pradesh</div>
+          <span class="edu-grade">80%</span>
+        </div>
+      </div>
+      <div class="edu-item">
+        <div class="edu-dot"><i class='bx bxs-chip'></i></div>
+        <div class="edu-card">
+          <div class="edu-year"><i class='bx bxs-calendar'></i> 2023 – 2027</div>
+          <div class="edu-degree">B.Tech — CSE (AI & DS)</div>
+          <div class="edu-school">Bonam Venkata Challamayya Engineering College, Odalarevu, AP</div>
+          <span class="edu-grade">CGPA: 9.04</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PROJECTS ── -->
+  <section id="projects">
+    <h2 class="sec-title">My <span>Projects</span></h2>
+    <div class="projects-grid">
+
+      <div class="project-wrap">
+        <div class="project-inner">
+          <!-- FRONT -->
+          <div class="card-front">
+            <div class="proj-num">001 / Live on Netlify</div>
+            <div class="proj-icon"><i class='bx bx-calculator'></i></div>
+            <div class="proj-name">Online Calculator</div>
+            <p class="proj-short">A clean, interactive web calculator for basic arithmetic operations.</p>
+            <div class="proj-tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span></div>
+            <div class="flip-hint"><i class='bx bx-rotate-right'></i> Hover to flip</div>
+          </div>
+          <!-- BACK -->
+          <div class="card-back">
+            <div>
+              <div class="back-label">001 / Project Details</div>
+              <div class="back-title">Online Calculator</div>
+              <p class="back-desc">A web-based calculator that performs addition, subtraction, multiplication, and division with a clean and interactive UI built using vanilla web technologies.</p>
+            </div>
+            <div class="back-actions">
+              <a href="https://calculator-minor-demo.netlify.app/" target="_blank" class="proj-link primary"><i class='bx bx-link-external'></i> View Live</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-wrap">
+        <div class="project-inner">
+          <!-- FRONT -->
+          <div class="card-front">
+            <div class="proj-num">002 / Live on Netlify</div>
+            <div class="proj-icon"><i class='bx bx-check-shield'></i></div>
+            <div class="proj-name">Form Validation App</div>
+            <p class="proj-short">Real-time form validation for name, email & password fields before submission.</p>
+            <div class="proj-tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span></div>
+            <div class="flip-hint"><i class='bx bx-rotate-right'></i> Hover to flip</div>
+          </div>
+          <!-- BACK -->
+          <div class="card-back">
+            <div>
+              <div class="back-label">002 / Project Details</div>
+              <div class="back-title">Form Validation App</div>
+              <p class="back-desc">A form validation web application that checks user input fields — name, email, and password — before submission, providing instant real-time feedback for a smooth user experience.</p>
+            </div>
+            <div class="back-actions">
+              <a href="https://formvalidation-demo-major.netlify.app/" target="_blank" class="proj-link primary"><i class='bx bx-link-external'></i> View Live</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+<!-- ── SKILLS ── -->
+<section id="skills">
+
+  <div class="weapons-title">
+    <span class="wt-my">MY</span>
+    <span class="wt-skills">
+      <span>S</span><span>k</span><span>i</span><span>L</span>
+      <span>l</span><span>S</span>
+    </span>
+  </div>
+
+  <!-- PROGRAMMING LANGUAGES -->
+  <div class="weapons-group">
+    <div class="weapons-group-label">Programming Languages</div>
+    <div class="weapons-row">
+
+      <div class="weapon-card">
+        <div class="weapon-icon-box" style="background:#0a1628;">
+          <svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+            <path fill="#659AD3" d="M115.4 30.7L67.1 2.9c-.8-.5-1.9-.7-3.1-.7-1.2 0-2.3.3-3.1.7l-48 27.9c-1.7 1-2.9 3.5-2.9 5.4v55.7c0 1.1.2 2.4 1 3.5l106.8-55.5c-.2-1.1-.9-2.4-1.4-3.2z"/>
+            <path fill="#03599C" d="M10.7 95.3c.5.8 1.2 1.5 1.9 1.9l48.2 27.9c.8.5 1.9.7 3.1.7 1.2 0 2.3-.3 3.1-.7l48-27.9c1.7-1 2.9-3.5 2.9-5.4V36.1c0-.9-.1-1.9-.6-2.8l-106.6 62z"/>
+            <path fill="#fff" d="M85.3 76.1C81.1 83.5 73.1 88.5 64 88.5c-13.5 0-24.5-11-24.5-24.5s11-24.5 24.5-24.5c9.1 0 17.1 5 21.3 12.5l13-7.5c-6.8-11.9-19.6-20-34.3-20-21.8 0-39.5 17.7-39.5 39.5s17.7 39.5 39.5 39.5c14.6 0 27.4-8 34.2-19.8l-13-7.6z"/>
+          </svg>
+        </div>
+        <div class="weapon-name">C</div>
+      </div>
+
+      <div class="weapon-card">
+        <div class="weapon-icon-box" style="background:#1a1200;">
+          <svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+            <linearGradient id="pyg1" x1="70.252" y1="1237.476" x2="170.659" y2="1151.089" gradientUnits="userSpaceOnUse" gradientTransform="matrix(.563 0 0 -.568 -29.215 707.817)">
+              <stop offset="0" stop-color="#5A9FD4"/><stop offset="1" stop-color="#306998"/>
+            </linearGradient>
+            <linearGradient id="pyg2" x1="209.474" y1="1098.811" x2="173.62" y2="1149.537" gradientUnits="userSpaceOnUse" gradientTransform="matrix(.563 0 0 -.568 -29.215 707.817)">
+              <stop offset="0" stop-color="#FFD43B"/><stop offset="1" stop-color="#FFE873"/>
+            </linearGradient>
+            <path fill="url(#pyg1)" d="M63.391 1.988c-4.222.02-8.252.379-11.8 1.007-10.45 1.846-12.346 5.71-12.346 12.837v9.411h24.693v3.137H29.977c-7.176 0-13.46 4.313-15.426 12.521-2.268 9.405-2.368 15.275 0 25.096 1.755 7.311 5.947 12.519 13.124 12.519h8.491V67.234c0-8.151 7.051-15.34 15.426-15.34h24.665c6.866 0 12.346-5.654 12.346-12.548V15.833c0-6.693-5.646-11.72-12.346-12.837-4.244-.706-8.645-1.027-12.876-1.008zM50.037 9.557c2.55 0 4.634 2.117 4.634 4.721 0 2.593-2.083 4.69-4.634 4.69-2.56 0-4.633-2.097-4.633-4.69-.001-2.604 2.073-4.721 4.633-4.721z"/>
+            <path fill="url(#pyg2)" d="M91.682 28.38v10.966c0 8.5-7.208 15.655-15.426 15.655H51.591c-6.756 0-12.346 5.783-12.346 12.548v23.508c0 6.693 5.818 10.628 12.346 12.547 7.816 2.297 15.312 2.713 24.665 0 6.216-1.801 12.346-5.423 12.346-12.547v-9.412H63.938v-3.138h37.012c7.176 0 9.852-5.005 12.348-12.519 2.578-7.735 2.467-15.174 0-25.096-1.774-7.145-5.161-12.521-12.348-12.521h-9.268zM77.809 87.927c2.561 0 4.634 2.097 4.634 4.692 0 2.602-2.074 4.719-4.634 4.719-2.55 0-4.633-2.117-4.633-4.719 0-2.595 2.083-4.692 4.633-4.692z"/>
+          </svg>
+        </div>
+        <div class="weapon-name">Python</div>
+      </div>
+
+      <div class="weapon-card">
+        <div class="weapon-icon-box" style="background:#1a0800;">
+          <svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+            <path fill="#EA2D2E" d="M47.617 98.12s-4.767 2.774 3.397 3.71c9.892 1.13 14.947.968 25.845-1.092 0 0 2.871 1.795 6.873 3.351-24.439 10.47-55.308-.607-36.115-5.969z"/>
+            <path fill="#EA2D2E" d="M44.629 84.455s-5.348 3.959 2.823 4.805c10.567 1.091 18.91 1.18 33.354-1.6 0 0 1.993 2.025 5.132 3.131-29.542 8.64-62.446.68-41.309-6.336z"/>
+            <path fill="#EA6C00" d="M69.429 40.262s-9.45 9.458 4.763 19.033c10.966 7.45 5.979 12.3 4.764 17.405-5.201-14.078-.047-20.462-4.764-17.405-4.718 3.057-4.764 18.374-4.764 18.374s-3.97-11.29 4.47-19.033c7.96-7.284 7.288-18.373-4.469-18.374z"/>
+            <path fill="#EA2D2E" d="M80.491 110.367s3.529 2.91-3.888 5.159c-14.112 4.272-58.742 5.56-71.152.17-4.455-1.938 3.899-4.625 6.526-5.19 2.739-.593 4.303-.485 4.303-.485-4.953-3.487-32.013 6.85-13.743 9.815 49.821 8.076 90.817-3.637 77.954-9.469z"/>
+            <path fill="#EA6C00" d="M49.448 68.351s-22.69 5.39-8.038 7.348c6.197.819 18.515.632 30.008-.322 9.394-.787 18.83-2.466 18.83-2.466s-3.309 1.419-5.705 3.053c-23.042 6.063-67.569 3.238-54.731-2.958 10.832-5.239 19.636-4.655 19.636-4.655z"/>
+            <path fill="#EA6C00" d="M108.482 90.542s3.344 2.757-3.683 4.882c-13.35 4.043-55.535 5.264-67.309.161-4.218-1.834 3.691-4.375 6.173-4.911 2.593-.561 4.072-.459 4.072-.459-4.687-3.301-30.285 6.482-13.005 9.289 47.147 7.645 85.921-3.443 73.752-8.962z"/>
+          </svg>
+        </div>
+        <div class="weapon-name">Java</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- WEB TECHNOLOGIES -->
+  <div class="weapons-group">
+    <div class="weapons-group-label">Web Technologies</div>
+    <div class="weapons-row">
+
+      <div class="weapon-card">
+        <div class="weapon-icon-box" style="background:#1a0800;">
+          <svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+            <path fill="#E44D26" d="M19.037 113.876L9.032 1.661h109.936l-10.016 112.198-45.019 12.48z"/>
+            <path fill="#F16529" d="M64 116.8l36.378-10.086 8.559-95.878H64z"/>
+            <path fill="#EBEBEB" d="M64 52.455H45.788L44.53 38.361H64V24.599H29.489l.33 3.692 3.382 37.927H64zm0 35.743l-.061.017-15.327-4.14-.979-10.975H33.816l1.928 21.609 28.193 7.826.063-.017z"/>
+            <path fill="#fff" d="M63.952 52.455v13.763h16.947l-1.597 17.849-15.35 4.143v14.319l28.215-7.82.207-2.325 3.234-36.233.335-3.696h-3.708zm0-27.856v13.762h33.244l.276-3.092.628-6.978.329-3.692z"/>
+          </svg>
+        </div>
+        <div class="weapon-name">HTML</div>
+      </div>
+
+      <div class="weapon-card">
+        <div class="weapon-icon-box" style="background:#001228;">
+          <svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+            <path fill="#1572B6" d="M18.814 114.123L8.76 1.352h110.48l-10.064 112.754-45.243 12.543-45.119-12.526z"/>
+            <path fill="#33A9DC" d="M64.001 117.062l36.559-10.136 8.601-96.354h-45.16v106.49z"/>
+            <path fill="#fff" d="M64.001 51.429h18.302l1.264-14.163H64.001V23.435h34.682l-.332 3.711-3.4 38.114h-30.95V51.429z"/>
+            <path fill="#EBEBEB" d="M64.083 87.349l-.061.018-15.403-4.159-.985-11.031H33.752l1.937 21.717 28.331 7.863.063-.018v-14.39z"/>
+            <path fill="#fff" d="M81.127 64.675l-1.666 18.522-15.426 4.164v14.39l28.354-7.858.208-2.337 2.406-26.881H81.127z"/>
+            <path fill="#EBEBEB" d="M64.048 23.435v13.831H30.64l-.277-3.108-.63-7.012-.331-3.711h34.646zm-.047 27.994v13.831H48.792l-.277-3.108-.631-7.012-.33-3.711h16.447z"/>
+          </svg>
+        </div>
+        <div class="weapon-name">CSS</div>
+      </div>
+
+      <div class="weapon-card">
+        <div class="weapon-icon-box" style="background:#1a1600;">
+          <svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+            <path fill="#F7DF1E" d="M1.408 1.408h125.184v125.185H1.408z"/>
+            <path fill="#323330" d="M116.347 96.736c-.917-5.711-4.641-10.508-15.672-14.981-3.832-1.761-8.104-3.022-9.377-5.926-.452-1.69-.512-2.642-.226-3.665.821-3.32 4.784-4.355 7.925-3.403 2.023.678 3.938 2.237 5.093 4.724 5.402-3.498 5.391-3.475 9.163-5.879-1.381-2.141-2.118-3.129-3.022-4.045-3.249-3.629-7.676-5.498-14.756-5.355l-3.688.477c-3.534.893-6.902 2.748-8.877 5.235-5.926 6.724-4.236 18.492 2.975 23.335 7.104 5.332 17.54 6.545 18.873 11.531 1.297 6.104-4.486 8.08-10.234 7.378-4.236-.881-6.592-3.034-9.139-6.949-4.688 2.713-4.688 2.713-9.508 5.485 1.143 2.499 2.344 3.63 4.26 5.795 9.068 9.198 31.76 8.746 35.83-5.176.165-.478 1.261-3.666.38-8.581zM69.462 58.943H57.753l-.048 30.272c0 6.438.333 12.34-.714 14.149-1.713 3.558-6.152 3.117-8.175 2.427-2.059-1.012-3.106-2.451-4.319-4.485-.333-.584-.583-1.036-.667-1.071l-9.52 5.83c1.583 3.249 3.915 6.069 6.902 7.901 4.462 2.678 10.459 3.499 16.731 2.059 4.082-1.189 7.604-3.652 9.448-7.401 2.666-4.915 2.094-10.864 2.07-17.444.06-10.735.001-21.468.001-32.237z"/>
+          </svg>
+        </div>
+        <div class="weapon-name">JavaScript</div>
+      </div>
+
+      <div class="weapon-card">
+        <div class="weapon-icon-box" style="background:#001220;">
+          <svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+            <g fill="#61DAFB">
+              <circle cx="64" cy="64" r="11.4"/>
+              <path d="M107.3 45.2c-2.2-.8-4.5-1.6-6.9-2.3.6-2.4 1.1-4.8 1.5-7.1 2.1-13.2-.2-22.5-6.6-26.1-1.9-1.1-4-1.6-6.4-1.6-7 0-15.9 5.2-24.9 13.9-9-8.7-17.9-13.9-24.9-13.9-2.4 0-4.5.5-6.4 1.6-6.4 3.7-8.7 13-6.6 26.1.4 2.3.9 4.7 1.5 7.1-2.4.7-4.7 1.4-6.9 2.3C8.2 50 1.4 56.6 1.4 64s6.8 14 19.3 18.8c2.2.8 4.5 1.6 6.9 2.3-.6 2.4-1.1 4.8-1.5 7.1-2.1 13.2.2 22.5 6.6 26.1 1.9 1.1 4 1.6 6.4 1.6 7.1 0 16-5.2 24.9-13.9 9 8.7 17.9 13.9 24.9 13.9 2.4 0 4.5-.5 6.4-1.6 6.4-3.7 8.7-13 6.6-26.1-.4-2.3-.9-4.7-1.5-7.1 2.4-.7 4.7-1.4 6.9-2.3 12.5-4.8 19.3-11.4 19.3-18.8s-6.8-14-19.3-18.8zM92.5 14.7c4.1 2.4 5.5 9.8 3.8 20.3-.3 2.1-.8 4.3-1.4 6.6-5.2-1.2-10.7-2-16.5-2.5-3.4-4.8-6.9-9.1-10.4-13 7.4-7.3 14.9-12.3 21-12.3 1.3 0 2.5.3 3.5.9zM81.3 74c-1.8 3.2-3.9 6.4-6.1 9.6-3.7.3-7.4.4-11.2.4-3.9 0-7.6-.1-11.2-.4-2.2-3.2-4.2-6.4-6-9.6-1.9-3.3-3.7-6.7-5.3-10 1.6-3.3 3.4-6.7 5.3-10 1.8-3.2 3.9-6.4 6.1-9.6 3.7-.3 7.4-.4 11.2-.4 3.9 0 7.6.1 11.2.4 2.2 3.2 4.2 6.4 6 9.6 1.9 3.3 3.7 6.7 5.3 10-1.7 3.3-3.4 6.6-5.3 10zm8.3-3.3c1.5 3.5 2.7 6.9 3.8 10.3-3.4.8-7 1.4-10.8 1.9 1.2-1.9 2.5-3.9 3.6-6 1.2-2.1 2.3-4.2 3.4-6.2zM64 97.8c-2.4-2.6-4.7-5.4-6.9-8.3 2.3.1 4.6.2 6.9.2 2.3 0 4.6-.1 6.9-.2-2.2 2.9-4.5 5.7-6.9 8.3zm-18.6-15c-3.8-.5-7.4-1.1-10.8-1.9 1.1-3.3 2.3-6.8 3.8-10.3 1.1 2 2.2 4.1 3.4 6.1 1.2 2.2 2.4 4.1 3.6 6.1zm-7-25.5c-1.5-3.5-2.7-6.9-3.8-10.3 3.4-.8 7-1.4 10.8-1.9-1.2 1.9-2.5 3.9-3.6 6-1.2 2.1-2.3 4.2-3.4 6.2zM64 30.2c2.4 2.6 4.7 5.4 6.9 8.3-2.3-.1-4.6-.2-6.9-.2-2.3 0-4.6.1-6.9.2 2.2-2.9 4.5-5.7 6.9-8.3zm22.2 21l-3.6-6c3.8.5 7.4 1.1 10.8 1.9-1.1 3.3-2.3 6.8-3.8 10.3-1.1-2-2.2-4.1-3.4-6.2zM31.7 35c-1.7-10.5-.3-17.9 3.8-20.3 1-.6 2.2-.9 3.5-.9 6 0 13.5 4.9 21 12.3-3.5 3.8-7 8.2-10.4 13-5.8.5-11.3 1.4-16.5 2.5-.6-2.3-1-4.5-1.4-6.6zM7 64c0-4.7 5.7-9.7 15.7-13.4 2-.8 4.2-1.5 6.4-2.1 1.6 5 3.6 10.3 6 15.6-2.4 5.3-4.5 10.5-6 15.5C17.9 75.6 7 69.6 7 64zm28.5 49.3c-4.1-2.4-5.5-9.8-3.8-20.3.3-2.1.8-4.3 1.4-6.6 5.2 1.2 10.7 2 16.5 2.5 3.4 4.8 6.9 9.1 10.4 13-7.4 7.3-14.9 12.3-21 12.3-1.3 0-2.5-.3-3.5-.9zM96.3 93c1.7 10.5.3 17.9-3.8 20.3-1 .6-2.2.9-3.5.9-6 0-13.5-4.9-21-12.3 3.5-3.8 7-8.2 10.4-13 5.8-.5 11.3-1.4 16.5-2.5.6 2.3 1 4.5 1.4 6.6zm9.5-14.7c-2 .8-4.2 1.5-6.4 2.1-1.6-5-3.6-10.3-6-15.6 2.4-5.3 4.5-10.5 6-15.5 13.8 4 24.5 9.9 24.5 15.6 0 4.7-5.8 9.7-15.7 13.4-1.9.8-2.6 1-2.4 1z"/>
+            </g>
+          </svg>
+        </div>
+        <div class="weapon-name">React</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- OTHER SKILLS -->
+  <div class="weapons-group">
+    <div class="weapons-group-label">Other Skills</div>
+    <div class="weapons-row">
+
+      <div class="weapon-card weapon-soft">
+        <div class="weapon-soft-icon"><i class='bx bx-group'></i></div>
+        <div class="weapon-name">Team Work</div>
+      </div>
+
+      <div class="weapon-card weapon-soft">
+        <div class="weapon-soft-icon"><i class='bx bx-bulb'></i></div>
+        <div class="weapon-name">Problem Solving</div>
+      </div>
+
+      <div class="weapon-card weapon-soft">
+        <div class="weapon-soft-icon"><i class='bx bx-time-five'></i></div>
+        <div class="weapon-name">Time Management</div>
+      </div>
+
+    </div>
+  </div>
+
+</section>
+
+
+
+  
+
+
+<!-- ── CERTIFICATES — POLAROID PINBOARD ── -->
+<section id="certificates">
+  <h2 class="sec-title">My <span>Certificates</span></h2>
+
+  <div class="cert-board">
+    <div class="cert-string"></div>
+
+    <div class="cert-cards-row">
+
+      <!-- Cert 1: C Programming -->
+      <div class="cert-polaroid tilt-left">
+        <div class="cert-pin" style="background:#4a9eff;"></div>
+        <div class="cert-ribbon" style="background:#4a9eff; color:#fff;">NPTEL</div>
+        <img src="./pic2.jpeg" alt="C Programming Certificate" class="cert-img"/>
+        <div class="cert-caption">C Programmer 💻✨</div>
+      </div>
+
+      <!-- Cert 2: Responsible & Safe AI -->
+      <div class="cert-polaroid tilt-none">
+        <div class="cert-pin" style="background:#ff00ee;"></div>
+        <div class="cert-ribbon" style="background:#ff00ee; color:#fff;">NPTEL</div>
+        <img src="./pic1.jpeg" alt="AI Systems Certificate" class="cert-img"/>
+        <div class="cert-caption">AI Safety Expert 🤖🌟</div>
+      </div>
+
+      <!-- Cert 3: Java Elite -->
+      <div class="cert-polaroid tilt-right">
+        <div class="cert-pin" style="background:#F5C842;"></div>
+        <div class="cert-ribbon" style="background:#F5C842; color:#0a0a0a;">ELITE</div>
+        <img src="./pic3.jpeg" alt="Java Certificate" class="cert-img"/>
+        <div class="cert-caption">Java Elite Certified ☕⭐</div>
+      </div>
+
+    </div>
+
+    <div class="board-watermark">Nandini's Achievements ✦ 2025</div>
+  </div>
+</section>
+
+  
+
+<!-- ── CONTACT ── -->
+<section id="contact">
+  <h2 class="sec-title">Contact <span>Me</span></h2>
+
+  <div class="cf-box" id="formWrap">
+
+    <form id="contactForm" onsubmit="handleSubmit(event)">
+
+      <div class="cf-row">
+        <input type="text"  class="cf-input" placeholder="Full Name"     required/>
+        <input type="email" class="cf-input" placeholder="Email"         required/>
+      </div>
+
+      <div class="cf-row">
+        <input type="tel"  class="cf-input" placeholder="Mobile Number"/>
+        <input type="text" class="cf-input" placeholder="Subject For"/>
+      </div>
+
+      <textarea class="cf-input cf-textarea" placeholder="Message" required></textarea>
+
+      <div class="cf-btn-wrap">
+        <button type="submit" class="cf-send-btn">
+          Send Message <i class='bx bx-send'></i>
+        </button>
+      </div>
+
+    </form>
+
+    <!-- Success -->
+    <div class="success-screen" id="successScreen">
+      <div class="success-circle"><i class='bx bx-check'></i></div>
+      <h4>Message <span>Sent!</span> 🎉</h4>
+      <p>Thank you! Nandini will get back to you within 24 hours.</p>
+    </div>
+
+  </div>
+</section>
+
+
+  <script>
+    // Animate skill bars when skills section enters view
+const barObs = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.querySelectorAll('.bar-fill').forEach((el, i) => {
+        setTimeout(() => {
+          el.style.width = el.dataset.pct + '%';
+        }, 150 + i * 100);
+      });
+    }
+  });
+}, { threshold: 0.2 });
+
+document.querySelectorAll('.skills-category').forEach(g => barObs.observe(g));
+    // hamburger
+    const menu   = document.getElementById('menu');
+    const navbar = document.getElementById('navbar');
+    menu.onclick = () => { menu.classList.toggle('bx-x'); navbar.classList.toggle('open'); };
+
+    // sticky header
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('sticky', window.scrollY > 80);
+      menu.classList.remove('bx-x');
+      navbar.classList.remove('open');
+    });
+
+    // scroll animations + active nav
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('.navbar a');
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          const id = entry.target.getAttribute('id');
+          navLinks.forEach(l => l.classList.remove('active'));
+          const active = document.querySelector(`.navbar a[href="#${id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { threshold: 0.15 });
+    sections.forEach(s => obs.observe(s));
+
+    // form submit
+    
+
+
+
+function handleSubmit(e) {
+  e.preventDefault();
+  document.getElementById('contactForm').style.display = 'none';
+  document.getElementById('successScreen').style.display = 'flex';
+}
+  </script>
+
+</body>
+</html>
